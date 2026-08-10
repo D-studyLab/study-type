@@ -196,7 +196,69 @@ svg.fig{display:block;width:100%;max-width:100%;height:auto}
 <meta property="og:url" content="https://d-studylab.com/study-type/">
 </head>
 <body>
-<div class="wrap" id="app"></div>
+<!-- ⚠ ここは空にしてはいけない（2026-08-10）。
+     以前は <div id="app"></div> だけで、中身を全部JavaScriptで描いていた。
+     その結果、**検索エンジンから見ると本文41字・見出し0個の空ページ**だった
+     （実測。16作品中いちばん薄い）。AdSenseの不承認理由「有用性の低いコンテンツ」に
+     まともに当たる状態。
+     → JSが動く前の中身をここに置く。JSが起動したら title() が上書きするので、
+       遊ぶ人の体験は変わらない。JSが無い人と、クローラーには、これが見える。 -->
+<div class="wrap" id="app">
+  <div class="kick">STUDY STUCK CHECK</div>
+  <h1>勉強のつまずき方診断</h1>
+  <p class="lead">15問こたえると、<b>あなたがどこで詰まっているか</b>と、
+    <b>今日やる1つ</b>が出ます。<br>点数の予想はしません。
+    個別指導塾で実際によく見る詰まり方を8つに分けました。</p>
+
+  <div class="card">
+    <p style="margin:0 0 12px;font-weight:900;font-size:16px">こんな結果が出ます</p>
+    <div class="hint"><span class="dot"></span><p>「解説を閉じて、白紙に書いてみて」</p></div>
+    <div class="hint"><span class="dot"></span><p>「5分で飛ばして、あとで戻ってきて」</p></div>
+    <p class="lead" style="margin:12px 0 0">—— 先生に相談したときに返ってくるような答えです。</p>
+  </div>
+
+  <div class="card" style="margin-top:18px">
+    <h2 style="font-size:17px;margin:0 0 10px">8つの詰まり方</h2>
+    <p class="lead" style="margin:0 0 10px">診断では、次の8つのどれに近いかが出ます。
+      どれで詰まっているかによって、<b>効く手が正反対になります</b>。</p>
+    <ul style="margin:0;padding-left:20px;font-size:14.5px;line-height:1.95">
+      <li><b>わかった気になる型</b> — 読むと分かる。でも白紙にすると出てこない</li>
+      <li><b>完璧主義で止まる型</b> — 1問に30分かけて、結局その1問しか進まない</li>
+      <li><b>前日にまとめてやる型</b> — 「やる気が出たら」が来ない</li>
+      <li><b>量はやるが伸びない型</b> — 新しい問題ばかり解いて、直しをしていない</li>
+      <li><b>何から手をつけるか決まらない型</b> — やることが5つあると全部中途半端になる</li>
+      <li><b>人と比べて凹む型</b> — 模試で最初に見るのが、平均点との差</li>
+      <li><b>集中が続かない型</b> — 気づくとスマホに手が伸びている</li>
+      <li><b>質問できない型</b> — 何が分からないか自分でも言えないので、聞けない</li>
+    </ul>
+  </div>
+
+  <div class="card" style="margin-top:18px">
+    <h2 style="font-size:17px;margin:0 0 10px">設問は「場面」で聞きます</h2>
+    <p class="lead" style="margin:0">「あなたは真面目ですか」のような抽象的な質問は1問もありません。
+      全問に場面が付いています——テスト3日前、夜9時の部屋、模試が返ってきた直後、丸つけのあと。
+      選択肢は4つで、どれも<b>その場面で実際にやってしまうこと</b>です。
+      それでも合わない人のために、全問に「どれも当てはまらない」を置いてあります
+      （選んでも点は入りません）。2択にすると「どちらでもない」人が必ず出て、
+      無理に選ばせた瞬間に結果が嘘になるからです。</p>
+  </div>
+
+  <div class="card" style="margin-top:18px">
+    <h2 style="font-size:17px;margin:0 0 10px">出方は均等にしていません</h2>
+    <p class="lead" style="margin:0">8つの型が12.5%ずつになるようには調整していません。
+      「みんなそう」なパターンも「特殊な」パターンも実在するので、そのまま出します。
+      条件にしているのは2つだけです——<b>8つすべてに到達すること</b>と、
+      <b>1つが半分を超えないこと</b>。
+      MBTIとは関係ありません。名前も指標も借りていませんし、性格を判定しません。
+      <b>次の一手を1つ決めるための道具</b>として作っています。</p>
+    <p class="lead" style="margin:10px 0 0">回答はすべて端末の中で処理され、どこにも送信されません。
+      登録も不要です。</p>
+  </div>
+
+  <p class="note" style="margin-top:18px">
+    ※ この画面はJavaScriptが動くと診断の本体に切り替わります。
+    切り替わらない場合は、ブラウザのJavaScriptを有効にしてください。</p>
+</div>
 <div class="toast" id="toast">結果をコピーしました</div>
 
 <script>
