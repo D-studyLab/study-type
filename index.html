@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>勉強のつまずき方診断 — 先生に相談したときに返ってくる答え</title>
+<meta name="description" content="15問こたえると、あなたがどこで詰まっているかと、明日からやる1つが出ます。塾で実際に見た詰まり方を8つに分けました。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="勉強のつまずき方診断 — 先生に相談したときに返ってくる答え">
+<meta property="og:description" content="15問こたえると、あなたがどこで詰まっているかと、今日やる1つが出ます。">
+<meta property="og:image" content="https://d-studylab.com/study-type/og.png">
+<meta property="og:site_name" content="D-studyLab">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="勉強のつまずき方診断">
+<meta name="twitter:description" content="15問こたえると、あなたがどこで詰まっているかと、今日やる1つが出ます。">
+<meta name="twitter:image" content="https://d-studylab.com/study-type/og.png">
+<link rel="icon" href="data:image/png;base64,">
+<style>
+/* ============================================================
+   見た目の方針（2026-08-09 作り直し）
+     ・明るく、中高生に馴染むトーン。夜空／星／紺金はやめた
+     ・主色はティール（緑青）＋差し色コーラル。紫は使わない
+     ・8タイプそれぞれに固有色。結果ページは「自分の色」になる
+   設問は 2026-08-09 に4択へ作り直した（下の QUESTIONS のコメント参照）
+   ============================================================ */
+:root{
+  --bg:#fbfaf6;          /* ごく淡いクリーム */
+  --bg2:#f2f1ea;
+  --surface:#ffffff;
+  --line:#e7e3d8;
+  --line2:#d8d3c5;
+  --ink:#1d2430;         /* 本文 */
+  --dim:#6d6a63;         /* 補助 */
+  --brand:#0e9b93;       /* 主色：ティール */
+  --brand-d:#0a726c;
+  --brand-s:#e6f4f2;
+  --accent:#f2603f;      /* 差し色：コーラル */
+  --accent-d:#c3411f;
+  --accent-s:#fdeee9;
+  --warn:#b8791a;
+  --warn-s:#fdf4e3;
+  --warn-l:#efdcb4;
+  --r:20px;
+  --shadow:0 2px 0 rgba(29,36,48,.04), 0 10px 24px rgba(29,36,48,.06);
+  --shadow-l:0 4px 0 rgba(29,36,48,.05), 0 18px 38px rgba(29,36,48,.09);
+  /* 結果ページで上書きされるタイプ色 */
+  --t:#0e9b93; --ts:#e6f4f2; --td:#0a726c;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;max-width:100%}
+body{
+  background:
+    radial-gradient(720px 380px at 8% -6%, #e9f6f4 0%, rgba(233,246,244,0) 62%),
+    radial-gradient(640px 340px at 100% 2%, #fdece7 0%, rgba(253,236,231,0) 60%),
+    var(--bg);
+  background-attachment:fixed;
+  color:var(--ink);font-size:16px;line-height:1.8;min-height:100vh;
+  font-family:"Hiragino Kaku Gothic ProN","Yu Gothic UI","Yu Gothic","Meiryo",system-ui,sans-serif;
+  font-feature-settings:"palt" 1;
+  -webkit-font-smoothing:antialiased;
+  overflow-wrap:anywhere;
+}
+.wrap{max-width:560px;margin:0 auto;padding:24px 16px 80px;position:relative}
+
+h1{font-size:29px;line-height:1.38;margin:10px 0 12px;font-weight:900;letter-spacing:-.01em}
+.kick{display:inline-block;background:var(--brand-s);color:var(--brand-d);
+  font-size:11.5px;letter-spacing:.16em;font-weight:900;
+  padding:6px 13px;border-radius:99px}
+.lead{color:var(--dim);font-size:15px;margin:0 0 22px;line-height:1.85}
+.lead b{color:var(--ink)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  padding:22px 20px;box-shadow:var(--shadow)}
+
+.btn{display:block;width:100%;border:0;border-radius:16px;padding:18px 18px;
+  font-size:17px;font-weight:900;cursor:pointer;font-family:inherit;letter-spacing:.02em;
+  background:linear-gradient(180deg,#12b0a7,var(--brand));color:#fff;margin-top:16px;
+  box-shadow:0 4px 0 #086f69, 0 10px 20px rgba(14,155,147,.28);transition:.12s}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 #086f69, 0 4px 10px rgba(14,155,147,.22)}
+.btn.accent{background:linear-gradient(180deg,#f7745a,var(--accent));
+  box-shadow:0 4px 0 #bd3d1c, 0 10px 20px rgba(242,96,63,.26)}
+.btn.accent:active{box-shadow:0 1px 0 #bd3d1c, 0 4px 10px rgba(242,96,63,.2)}
+.btn.sub{background:var(--surface);color:var(--ink);border:2px solid var(--line2);
+  box-shadow:0 3px 0 var(--line2);font-weight:800}
+.btn.sub:active{box-shadow:0 1px 0 var(--line2)}
+
+.hint{display:flex;gap:10px;align-items:flex-start;background:var(--accent-s);
+  border-radius:14px;padding:13px 15px;margin:0 0 4px}
+.hint .dot{flex:0 0 auto;width:9px;height:9px;border-radius:50%;
+  background:var(--accent);margin-top:9px}
+.hint p{margin:0;font-size:14.5px;line-height:1.8}
+
+/* 設問 */
+.pwrap{margin-bottom:22px}
+.pbar{height:11px;background:#eae7dd;border-radius:99px;overflow:hidden;
+  box-shadow:inset 0 1px 2px rgba(29,36,48,.07)}
+.pbar>i{display:block;height:100%;border-radius:99px;
+  background:linear-gradient(90deg,var(--brand),#3fc0a2 55%,var(--accent));
+  width:0;transition:width .35s cubic-bezier(.4,0,.2,1)}
+.pnum{font-size:12.5px;color:var(--dim);font-weight:800;margin-top:8px;
+  display:flex;justify-content:space-between;font-variant-numeric:tabular-nums}
+.pnum .now{color:var(--brand-d)}
+/* 場面の見出し。「いつ・どこの話か」を先に出すと答えやすい（本人指示 2026-08-09） */
+.scene{display:inline-block;background:var(--accent-s);color:var(--accent-d);
+  font-size:12.5px;font-weight:900;letter-spacing:.06em;padding:5px 12px;border-radius:999px;
+  margin:6px 0 10px}
+.q{font-size:21px;font-weight:900;line-height:1.6;margin:0 0 20px;letter-spacing:-.005em}
+.opt{position:relative;display:flex;align-items:center;gap:13px;width:100%;text-align:left;
+  background:var(--surface);color:var(--ink);
+  border:2px solid var(--line);border-radius:18px;padding:17px 16px;margin-bottom:13px;
+  font-size:16px;font-weight:700;line-height:1.7;cursor:pointer;font-family:inherit;
+  box-shadow:0 3px 0 var(--line2);transition:.12s}
+.opt .mk{flex:0 0 auto;width:26px;height:26px;border-radius:50%;
+  background:var(--brand-s);color:var(--brand-d);font-size:12.5px;font-weight:900;
+  display:flex;align-items:center;justify-content:center;line-height:1}
+.opt:nth-of-type(even) .mk{background:var(--accent-s);color:var(--accent-d)}
+.opt span{flex:1 1 auto;min-width:0}
+.opt:hover{border-color:var(--brand);background:#f7fdfc}
+.opt:active{transform:translateY(3px);box-shadow:0 0 0 var(--line2)}
+/* 逃げ道。無理に選ばせると結果が嘘になるので、点を入れずに進める */
+.skip{display:block;width:100%;background:none;border:1px dashed var(--line2);
+  color:var(--dim);border-radius:14px;padding:12px;margin:4px 0 2px;
+  font-size:13.5px;font-weight:800;cursor:pointer;font-family:inherit}
+.skip:hover{color:var(--ink);border-color:var(--dim)}
+.back{background:none;border:0;color:var(--dim);font-size:13.5px;font-weight:800;
+  cursor:pointer;padding:12px 2px;font-family:inherit}
+.back:hover{color:var(--ink)}
+
+/* 結果 */
+.res{--t:#0e9b93;--ts:#e6f4f2;--td:#0a726c}
+.rhead{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  overflow:hidden;box-shadow:var(--shadow-l);margin-bottom:18px}
+.rband{height:12px;background:linear-gradient(90deg,var(--t),var(--td))}
+.rhead .in{padding:20px 20px 22px;background:var(--ts)}
+.rtype{display:inline-block;background:var(--surface);color:var(--td);
+  font-size:11.5px;letter-spacing:.14em;font-weight:900;padding:5px 12px;border-radius:99px}
+.rname{font-size:33px;font-weight:900;line-height:1.32;margin:12px 0 6px;
+  color:var(--td);letter-spacing:-.02em}
+.rsub{color:var(--ink);font-size:15px;font-weight:700;margin:0;line-height:1.75}
+.okbox{background:var(--surface);border:2px solid var(--ts);border-radius:14px;
+  padding:13px 15px;margin:16px 0 0;font-size:14px;line-height:1.75}
+.okbox b{display:block;color:var(--td);font-size:11.5px;letter-spacing:.14em;margin-bottom:2px}
+
+/* 8タイプの分布と自分の位置（2026-08-10 追加）
+   本人の要望：「どういった型があって、どこら辺に自分が配置されているか」
+   ・図はすべてインラインSVG。viewBox固定＋width:100% なので、
+     どんな幅でも**絶対に横あふれしない**（360pxで実測済み） */
+.figwrap{margin:0 0 4px}
+.figbox{background:var(--surface);border:1px solid var(--line);border-radius:16px;
+  padding:13px 11px 11px;margin-bottom:10px}
+svg.fig{display:block;width:100%;max-width:100%;height:auto}
+.figyou{margin:0 2px 7px;font-size:12.5px;font-weight:900;line-height:1.6;color:var(--ink)}
+.figyou b{color:var(--td)}
+.fignote{margin:9px 2px 0;font-size:11.5px;color:var(--dim);line-height:1.7}
+.fignote b{color:var(--ink);font-weight:800}
+
+.sec{margin:26px 0 0}
+.sec h3{font-size:16px;font-weight:900;margin:0 0 12px;color:var(--td);
+  display:flex;align-items:center;gap:9px}
+.sec h3::before{content:"";flex:0 0 auto;width:10px;height:10px;border-radius:50%;
+  background:var(--t)}
+.sec p{margin:0 0 12px;font-size:15px}
+.advice{background:var(--ts);border-radius:16px;
+  padding:15px 16px;margin-bottom:11px;display:flex;gap:12px;align-items:flex-start}
+/* 直下の b だけがラベル。本文中の強調（span 内の b）には効かせない */
+.advice>b{color:#fff;background:var(--t);font-size:11.5px;font-weight:900;flex:0 0 auto;
+  padding:4px 10px;border-radius:99px;margin-top:4px;letter-spacing:.06em;white-space:nowrap}
+.advice span{flex:1 1 auto;min-width:0;font-size:14.5px;line-height:1.8}
+.advice span b{color:var(--td);font-weight:900}
+.today{background:linear-gradient(135deg,var(--t),var(--td));color:#fff;
+  border-radius:18px;padding:20px;margin-top:18px;box-shadow:var(--shadow-l)}
+.today .t{font-size:11.5px;font-weight:900;letter-spacing:.16em;opacity:.85}
+.today .b{font-size:20px;font-weight:900;line-height:1.6;margin-top:8px}
+.warnbox{background:var(--warn-s);border:2px solid var(--warn-l);border-radius:16px;
+  padding:15px 16px;font-size:14.5px;line-height:1.8}
+.warnbox .t{color:var(--warn);font-size:12px;font-weight:900;margin-bottom:4px;
+  letter-spacing:.04em}
+.note{color:var(--dim);font-size:12.5px;margin-top:26px;line-height:1.85}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{font-size:12px;font-weight:800;color:var(--td);background:var(--ts);
+  border-radius:99px;padding:6px 13px}
+.chip.plain{color:var(--dim);background:var(--bg2)}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:#fff;padding:13px 22px;border-radius:99px;font-weight:800;
+  font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:9;
+  box-shadow:0 10px 26px rgba(29,36,48,.28);max-width:88vw;text-align:center}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:420px){
+  h1{font-size:25px}
+  .rname{font-size:28px}
+  .q{font-size:18.5px}
+  .opt{font-size:15px;padding:15px 14px}
+  .today .b{font-size:18px}
+}
+</style>
+
+<meta property="og:url" content="https://d-studylab.com/study-type/">
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<div class="toast" id="toast">結果をコピーしました</div>
+
+<script>
+/* ============================================================
+   勉強のつまずき方診断
+   本人の指示（2026-08-09）：
+     「塾や学校で先生に相談したりするじゃん？そんな感じの結果に」
+   → 結果は「タイプ名の当てっこ」ではなく、
+     ①どこで詰まっているか ②だからこうしなさい ③今日はこれだけ
+     が返ってくる形にする。
+   ⚠ MBTIの名前は使わない（商標・無資格の診断提供リスク）。
+   ============================================================ */
+
+const TYPES = {
+  wakatta: {
+    name:"わかった気になる型",
+    kick:"読んで理解する力はあります。インプットは足りています",
+    sub:"読むと分かる。でも、白紙にすると出てこない。",
+    what:[
+      "解説を読んでいる時間が長く、自分の手で解いている時間が短い状態です。",
+      "読んでいるときの「わかる」は、思い出せることを保証しません。<b>見ながら解けるのは、解けるうちに入らない</b>のがつらいところです。",
+      "「家ではできたのに本番でできない」が起きるのは、たいていここです。"
+    ],
+    advice:[
+      ["まず","解説を閉じて、白紙に何も見ずに書いてみる。書けなかったところが、あなたの本当の穴です"],
+      ["つぎに","1問解いたら、教科書を閉じて<b>声に出して説明</b>してみる。詰まったところが分かっていないところです"],
+      ["ずっと","「読んだ問題数」ではなく「<b>何も見ずに解けた問題数</b>」を数える"]
+    ],
+    today:"いま解いた問題を1問、何も見ずにもう一度解く。",
+    bad:"解説を丁寧に読み直すこと。すでに足りているので、増やしても効きません。",
+    tags:["復習のやり方","アウトプット不足"]
+  },
+  kanpeki: {
+    name:"完璧主義で止まる型",
+    kick:"途中で投げ出しません。ひとつずつ向き合える人です",
+    sub:"1問に30分かけて、結局その1問しか進まない。",
+    what:[
+      "分からない問題を飛ばせず、そこで時間が溶けている状態です。",
+      "真面目さが原因なので、性格を直せという話ではありません。<b>止まる前に手を離す仕組み</b>を外側に作るほうが早いです。",
+      "「全部わかってから次へ」を続けると、範囲が終わりません。"
+    ],
+    advice:[
+      ["まず","タイマーを5分にする。鳴ったら、分からなくても次へ行く。印だけ付けておく"],
+      ["つぎに","1周目は<b>解ける問題だけ</b>拾って終わらせる。2周目で印のところに戻る"],
+      ["ずっと","「分からない」は悪いことではなく<b>あとで戻る場所の目印</b>だと決めておく"]
+    ],
+    today:"いま止まっている問題に印をつけて、次の問題へ行く。",
+    bad:"「わかるまで粘る」こと。粘って解けた1問より、飛ばして進んだ10問のほうが伸びます。",
+    tags:["時間配分","1周目の作り方"]
+  },
+  zenjitsu: {
+    name:"前日にまとめてやる型",
+    kick:"やると決めたときの集中は強い。短期で仕上げる力があります",
+    sub:"やる気が出たら、が来ない。",
+    what:[
+      "計画の内容ではなく、<b>始めるきっかけ</b>のほうが足りていない状態です。",
+      "「今日は2時間やる」のような量の計画は、始まらないと0になります。<b>量ではなく時刻</b>で決めるほうが動きます。",
+      "前日にまとめてやると短期記憶で乗り切れてしまうので、次の単元でまた同じことが起きます。"
+    ],
+    advice:[
+      ["まず","「何時から」だけ決める。<b>何をやるかは決めない</b>。座ることだけが目標"],
+      ["つぎに","最初の1つを<b>ばかばかしいほど小さく</b>する（問題集を開く、だけでよい）"],
+      ["ずっと","終わった時間ではなく<b>始めた時間</b>を記録する。続いているかが見える"]
+    ],
+    today:"明日、机に座る時刻を1つだけ決めて、紙に書いて貼る。",
+    bad:"完璧な計画表を作ること。作ること自体が目的になって、実行されません。",
+    tags:["習慣","始め方"]
+  },
+  ryou: {
+    name:"量はやるが伸びない型",
+    kick:"手を動かす量は足りています。机に向かう習慣があります",
+    sub:"新しい問題ばかり解いて、間違えた問題を放置している。",
+    what:[
+      "勉強量は十分なのに、<b>直しの工程が抜けている</b>状態です。",
+      "新しい問題を解くのは気持ちがいいので、つい進んでしまいます。でも点数を上げるのは<b>できなかったものができるようになること</b>だけです。",
+      "「たくさんやったのに」がいちばんつらい。だからこそ、ここを変えると効きます。"
+    ],
+    advice:[
+      ["まず","今日やった問題の中で<b>間違えたものだけ</b>をもう一度解く。新しい問題は解かない"],
+      ["つぎに","間違えた問題に日付を書き、<b>3日後・1週間後</b>にもう一度やる"],
+      ["ずっと","「なぜ間違えたか」を一言だけ書く（計算ミス／知識不足／読み違い）。分類できると対策が変わります"]
+    ],
+    today:"今日いちばん最後に間違えた問題を、もう一度だけ解く。",
+    bad:"新しい問題集を買うこと。持っているものの直しが終わっていないうちは、増えるだけです。",
+    tags:["復習の間隔","間違い直し"]
+  },
+  yusen: {
+    name:"何から手をつけるか決まらない型",
+    kick:"やる気はあります。始まりさえすれば進む人です",
+    sub:"全部やらなきゃと思って、どれも始まらない。",
+    what:[
+      "順番が決まっていないので、選ぶところで止まっている状態です。",
+      "多くの人が「一番苦手なものから」と考えますが、それは<b>いちばん重くていちばん始めにくい</b>やり方です。",
+      "始まりさえすれば進む人なので、選ぶ手間を消すのが効きます。"
+    ],
+    advice:[
+      ["まず","苦手なものからではなく<b>いちばん出るところから</b>やる。配点の大きいところが先です"],
+      ["つぎに","やることを<b>3つまで</b>紙に書く。4つ目以降は今日は見ない"],
+      ["ずっと","夜のうちに<b>明日の最初の1つ</b>だけ決めておく。朝に選ばない"]
+    ],
+    today:"明日の最初にやる1つを、いま紙に書く。",
+    bad:"全教科の計画を一度に立てること。立てた時点で力尽きます。",
+    tags:["優先順位","選ぶ回数を減らす"]
+  },
+  hikaku: {
+    name:"人と比べて凹む型",
+    kick:"ちゃんと続いています。気にかけているからこそ、しんどいのです",
+    sub:"隣の人の点数で、自分の努力が消える。",
+    what:[
+      "勉強のやり方ではなく、<b>ものさしの置き場所</b>が外にある状態です。",
+      "他人の点数は自分では動かせません。動かせないものを基準にすると、努力しても手応えが出ません。",
+      "この型の人は、実はちゃんと続いています。足りないのは努力ではなく、<b>伸びが見えるものさし</b>のほうです。"
+    ],
+    advice:[
+      ["まず","比べる相手を<b>先週の自分</b>だけにする。他人の点数は聞かない、見ない"],
+      ["つぎに","点数ではなく<b>できた問題の数</b>を記録する。伸びが見えるものを持つ"],
+      ["ずっと","うまくいかない日は「今日は何ができたか」を1つだけ書いて終える"]
+    ],
+    today:"今日できるようになったことを、1つだけ書き出す。",
+    bad:"順位表を見て奮起しようとすること。それで燃える人もいますが、あなたの場合は削られるほうが先に来ます。",
+    tags:["続け方","ものさし"]
+  },
+  shuchu: {
+    name:"集中が続かない型",
+    kick:"机には向かえています。いちばん重い「始める」はできています",
+    sub:"座って5分で、スマホを触っている。",
+    what:[
+      "意志の強さではなく、<b>環境の設計</b>で決まっている部分が大きい状態です。",
+      "スマホは「見ないでおこう」と思っているだけで注意力を使います。<b>視界から消す</b>ほうが確実です。",
+      "続かないのは能力ではありません。仕組みで解けます。"
+    ],
+    advice:[
+      ["まず","机に座る前に<b>机の上を空にする</b>。出すのは今からやる1冊だけ"],
+      ["つぎに","スマホは<b>別の部屋</b>に置く。同じ部屋だと、伏せても効果が薄い"],
+      ["ずっと","25分やって5分休む、を1セットにする。<b>休むのを予定に入れる</b>"]
+    ],
+    today:"次に座るとき、机の上を空にしてから座る。",
+    bad:"「気合いで我慢する」こと。我慢に使った分だけ、勉強に使える力が減ります。",
+    tags:["環境","スマホ"]
+  },
+  shitsumon: {
+    name:"質問できない型",
+    kick:"分からないことに気づけています。これは力のうちです",
+    sub:"何が分からないのかを、うまく言えない。",
+    what:[
+      "分かっていないのではなく、<b>分からない場所を切り出す言い方</b>を持っていない状態です。",
+      "「ここが分かりません」と言えないと、先生の側も何を説明していいか分かりません。結果、聞かないまま進んでしまいます。",
+      "これは技術なので、型を覚えれば今日から使えます。"
+    ],
+    advice:[
+      ["まず","「分かりません」ではなく<b>「ここまでは分かります」</b>と言う。その次の行が質問になります"],
+      ["つぎに","問題を指して<b>「この式のここが、どこから出てきたか分かりません」</b>と場所で言う"],
+      ["ずっと","授業中に「あれ？」と思った瞬間に<b>教科書の余白に印</b>をつけておく。あとで質問の材料になります"]
+    ],
+    today:"今日つまずいた問題に「ここまでは分かる」の線を引く。",
+    bad:"全部わかってからまとめて聞こうとすること。溜めるほど聞きにくくなります。",
+    tags:["質問の仕方","授業の受け方"]
+  }
+};
+
+/* タイプごとの色（見た目だけ。判定には一切関わらない）
+   c=主色 / s=淡い下地 / d=文字にしても読める濃い色
+   紫は使わない（16Personalitiesと被るため）。8色を色相で散らしてある。 */
+const TYPE_COLOR = {
+  wakatta:   {c:"#0e9b93", s:"#e6f4f2", d:"#0a6d67"},  /* ティール */
+  ryou:      {c:"#2fa35c", s:"#e9f5ec", d:"#1e7040"},  /* グリーン */
+  zenjitsu:  {c:"#e0900f", s:"#fcf3e0", d:"#96620a"},  /* アンバー */
+  kanpeki:   {c:"#f2603f", s:"#fdeee9", d:"#bd3d1c"},  /* コーラル */
+  hikaku:    {c:"#e4436e", s:"#fdeaef", d:"#ac2a4d"},  /* ローズ */
+  shitsumon: {c:"#c4499e", s:"#faebf5", d:"#8f3372"},  /* マゼンタ */
+  yusen:     {c:"#4361d8", s:"#ecefff", d:"#2f45a0"},  /* ブルー */
+  shuchu:    {c:"#2190c9", s:"#e7f2fa", d:"#166589"}   /* スカイ */
+};
+
+/* ランダムに15問を答える試行を3000回まわしたときの、実際の出方（2026-08-09 実測）。
+   ⚠ これは**設問と配点から決まる出やすさ**であって、世の中の人の割合ではない。
+     画面上でもその旨を必ず書くこと（数字だけ出すと嘘になる）。合計100.0%。 */
+const RAND_PCT = {
+  yusen:26.7, shitsumon:15.7, zenjitsu:14.5, wakatta:12.0,
+  kanpeki:10.5, hikaku:7.6, ryou:6.5, shuchu:6.5
+};
+
+/* 設問。**具体的な場面 × 4択**にしてある。
+   ⚠ 2026-08-09 本人指示で作り直し（2回目）：
+     1回目 … 8タイプが4回ずつ出るよう配分を直した（それ以前は完璧主義が43%、質問できない型が0%）
+     2回目 … 「回答が2個しかないと、どちらでもない、という人が出る。
+              なるべく具体的なシチュエーションにして、選びやすくして」
+              「無理して均等に分かれるようにしなくていい。
+               特殊パターンの人も、みんなそうだよねってパターンもある」
+     → 2択をやめて、**その場面で実際にやってしまうこと**を4つ並べる形にした。
+       抽象的な性格の質問（「あなたは真面目ですか」的なもの）は全部やめている。
+
+   データの形: [場面の説明, 質問文, [[選択肢, {タイプ:点}], ...]]
+     ・点は 2 = ど真ん中 / 1 = 少し寄っている。1つの選択肢が2タイプに配ってよい
+     ・**均等配分はしない**。「みんなそう」な選択肢は点を薄く（1点だけ）、
+       特徴がはっきり出る選択肢は厚く（2点）にして、出方に濃淡が出るようにしている */
+const QUESTIONS = [
+  ["テスト3日前", "範囲の問題集がまだ半分。最初にやることは？", [
+    ["解説をもう一度ぜんぶ読み直して、頭に入れ直す", {wakatta:2}],
+    ["前に間違えた問題に、ばつ印のところから戻って解き直す", {ryou:1}],
+    ["まだ手をつけていない後半を、とにかく前に進める", {zenjitsu:1, ryou:1}],
+    ["どこから手をつけるか決められず、ノートを見返して終わる", {yusen:2}]
+  ]],
+
+  ["数学の宿題", "5分考えても解けない問題に当たった。実際どうしてる？", [
+    ["わかるまで粘る。飛ばすと気持ち悪い", {kanpeki:2}],
+    ["答えを見て、なるほどと思って次へ行く", {wakatta:2}],
+    ["印だけつけて飛ばす。あとで戻る（戻れているかは別）", {ryou:1, zenjitsu:1}],
+    ["そのまま止まって、スマホを見てしまう", {shuchu:2}]
+  ]],
+
+  ["授業中", "先生の説明でわからないところが出てきた。そのあと？", [
+    ["手を挙げて聞く／授業後に質問しに行く", {}],
+    ["何がわからないか自分でも言えないので、聞けない", {shitsumon:3}],
+    ["周りは分かってそうだし、聞くと恥ずかしい", {shitsumon:1, hikaku:2}],
+    ["とりあえずノートに写して、あとで考えることにする（考えない）", {shitsumon:1, wakatta:1}]
+  ]],
+
+  ["夜9時、部屋", "「そろそろやるか」と思ってから、実際に机に座るまで。", [
+    ["10分以内には座れる", {}],
+    ["1時間くらいスマホを見てから、結局座らない日もある", {zenjitsu:2}],
+    ["座るけど、5分で他のことを始めている", {shuchu:2}],
+    ["何をやるか決まっていなくて、決めているうちに時間が過ぎる", {yusen:2}]
+  ]],
+
+  ["模試が返ってきた", "答案用紙を開いて、最初に目が行くのは？", [
+    ["偏差値と、判定", {hikaku:1}],
+    ["平均点と、自分の点の差", {hikaku:2}],
+    ["どの分野が落ちているか", {}],
+    ["間違えた問題そのもの。何を間違えたのか見る", {}]
+  ]],
+
+  ["家で解いたときは解けた問題", "テスト本番で解けなかった。心当たりは？", [
+    ["解説を見ながら解いていた気がする", {wakatta:2}],
+    ["解いたのが前すぎて、忘れていた", {ryou:2}],
+    ["時間が足りなくて、そこまで辿り着けなかった", {kanpeki:2}],
+    ["緊張して、頭が真っ白になった", {hikaku:1}]
+  ]],
+
+  ["問題集を1冊もらった", "あなたの進め方に近いのは？", [
+    ["1ページ目から順に、全部きっちり解く", {kanpeki:2}],
+    ["解けるところを拾って、まず最後まで行く", {}],
+    ["解くけど、丸つけしたあと直しはしていない", {ryou:2}],
+    ["最初の数ページで止まっている本が、何冊かある", {zenjitsu:1, yusen:1}]
+  ]],
+
+  ["勉強を2時間した日の夜", "「今日やったな」と思えるのはどれ？", [
+    ["ページがたくさん進んだとき", {wakatta:1, ryou:1}],
+    ["ずっと机に向かえていたとき", {zenjitsu:2}],
+    ["解けなかった問題が解けるようになったとき", {}],
+    ["正直、2時間やっても何も残っていない気がする", {shuchu:1, yusen:1}]
+  ]],
+
+  ["スマホ", "勉強中にスマホを触るとき、直前に何があった？", [
+    ["特になにも。気づいたら手が伸びていた", {shuchu:2}],
+    ["問題が解けなくて、いやになった", {shitsumon:1, shuchu:1}],
+    ["友達の勉強の投稿や成績の話が気になった", {hikaku:2}],
+    ["そもそも机にスマホを持ち込んでいない", {}]
+  ]],
+
+  ["やることが5つある日", "実際どうなる？", [
+    ["1つ目を完璧に終わらせて、そこで時間切れ", {kanpeki:2}],
+    ["どれから手をつけるか迷って、全部中途半端", {yusen:2}],
+    ["やりやすいものだけやって、重いものが残る", {yusen:2}],
+    ["紙に書き出して、順番に潰していける", {}]
+  ]],
+
+  ["わからない単元がある", "そのまま放置してしまった一番の理由は？", [
+    ["時間がなくて後回しにした", {zenjitsu:2}],
+    ["誰に、どう聞けばいいか分からなかった", {shitsumon:3}],
+    ["聞くと「そんなことも分からないの」と思われそうだった", {shitsumon:3, hikaku:1}],
+    ["わかったつもりでいたら、実は分かっていなかった", {wakatta:2}]
+  ]],
+
+  ["丸つけのあと", "間違えた問題をどうしている？", [
+    ["解説を読んで、理解できたら次へ行く", {wakatta:2}],
+    ["赤で答えを写して終わり", {ryou:2}],
+    ["何も見ずにもう一度解き直す", {}],
+    ["丸つけ自体を、あとでまとめてやろうとして溜まっている", {yusen:1, zenjitsu:1}]
+  ]],
+
+  ["定期テストの点が上がらない", "頭に浮かぶのはどれ？", [
+    ["やり方が間違っているのかもしれない", {}],
+    ["自分は向いていないのかもしれない", {hikaku:2}],
+    ["量が足りていないだけだと思う", {zenjitsu:1, ryou:1}],
+    ["何が原因なのか、そもそも分からない", {shitsumon:2, yusen:1}]
+  ]],
+
+  ["机の上", "いま勉強している場所を思い出してください。", [
+    ["いま使うものだけが出ている", {}],
+    ["教科書もプリントもスマホも出たまま", {shuchu:2}],
+    ["きれいにしてから始めようとして、片付けで終わる日がある", {kanpeki:1, zenjitsu:1}],
+    ["リビングや自習室など、そもそも自分の机ではやらない", {}]
+  ]],
+
+  ["1週間の勉強の計画", "立てたあと、どうなった？", [
+    ["きっちり立てたが、2日目で崩れてやめた", {kanpeki:1, zenjitsu:1}],
+    ["立てていない。その日の気分でやっている", {yusen:2}],
+    ["立てた通りにやれている", {}],
+    ["立てるのが楽しくて、計画表を作り直してばかりいる", {yusen:2, kanpeki:1}]
+  ]]
+];
+
+let idx = 0;
+const score = {};
+Object.keys(TYPES).forEach(k => score[k] = 0);
+const history = [];
+
+const $ = id => document.getElementById(id);
+const app = () => $('app');
+
+function title(){
+  app().innerHTML = `
+    <div class="kick">STUDY STUCK CHECK</div>
+    <h1>勉強のつまずき方診断</h1>
+    <p class="lead">${QUESTIONS.length}問こたえると、<b>あなたがどこで詰まっているか</b>と、
+      <b>今日やる1つ</b>が出ます。<br>点数の予想はしません。塾で実際によく見る詰まり方を8つに分けました。</p>
+    <div class="card">
+      <p style="margin:0 0 12px;font-weight:900;font-size:16px">こんな結果が出ます</p>
+      <div class="hint"><span class="dot"></span><p>「解説を閉じて、白紙に書いてみて」</p></div>
+      <div class="hint"><span class="dot"></span><p>「5分で飛ばして、あとで戻ってきて」</p></div>
+      <p class="lead" style="margin:12px 0 0">—— 先生に相談したときに返ってくるような答えです。</p>
+      <button class="btn" onclick="start()">はじめる（2分）</button>
+    </div>
+    <p class="note">答えは記録されません。すべてこの画面の中だけで計算しています。<br>
+      中学生・高校生を想定していますが、大人が使っても成立します。</p>`;
+}
+
+function start(){ idx = 0; history.length = 0;
+  Object.keys(score).forEach(k => score[k] = 0); render(); }
+
+const MARK = ["A","B","C","D","E"];
+
+function render(){
+  if(idx >= QUESTIONS.length) return result();
+  const [scene, q, opts] = QUESTIONS[idx];
+  const pct = Math.round(idx / QUESTIONS.length * 100);
+  app().innerHTML = `
+    <div class="pwrap">
+      <div class="pbar"><i style="width:${Math.max(4, pct)}%"></i></div>
+      <div class="pnum"><span>あと${QUESTIONS.length - idx}問</span>
+        <span><span class="now">${idx+1}</span> / ${QUESTIONS.length}</span></div>
+    </div>
+    <div class="scene">${scene}</div>
+    <div class="q">${q}</div>
+    ${opts.map((o,i)=>`<button class="opt" onclick="pick(${i})">
+        <span class="mk">${MARK[i]}</span><span>${o[0]}</span></button>`).join('')}
+    <button class="skip" onclick="pick(-1)">どれも当てはまらない</button>
+    ${idx>0 ? '<button class="back" onclick="back()">← 1つ戻る</button>' : ''}`;
+  window.scrollTo(0,0);
+}
+
+/* i = -1 は「どれも当てはまらない」＝点を入れずに進む。
+   無理に選ばせると結果が嘘になるので、逃げ道を用意している。 */
+function pick(i){
+  const gain = (i < 0) ? {} : (QUESTIONS[idx][2][i][1] || {});
+  Object.keys(gain).forEach(k => { score[k] = (score[k]||0) + gain[k]; });
+  history.push(gain);
+  idx++; render();
+}
+function back(){
+  if(!history.length) return;
+  const gain = history.pop();
+  Object.keys(gain).forEach(k => { score[k] -= gain[k]; });
+  idx--; render();
+}
+
+/* ===== 8タイプの分布と、自分の位置（2026-08-10 追加）=====
+   1枚で2つ見せる：
+     ① 帯グラフ … どんな型があるか一望＋自分の型だけ大きく縁取り
+     ② 点数の内訳 … 8タイプの得点。2位・3位も見えるので「またがっている」かが分かる
+   SVGの座標系は幅320固定。width:100% で縮むだけなので横あふれしない。 */
+function figure(best, col){
+  const X0 = 6, BW = 308, GAP = 1.2;
+  const order = Object.keys(RAND_PCT).sort((a,b)=>RAND_PCT[b]-RAND_PCT[a]);
+  let x = X0, segs = '', myCx = X0 + BW/2;
+  order.forEach(k=>{
+    const w = BW * RAND_PCT[k] / 100;
+    const c = TYPE_COLOR[k] || TYPE_COLOR.wakatta;
+    const mine = (k === best);
+    const y = mine ? 8 : 13, h = mine ? 38 : 28;
+    segs += `<rect x="${(x+GAP/2).toFixed(2)}" y="${y}" width="${Math.max(1,w-GAP).toFixed(2)}"`
+         +  ` height="${h}" rx="${mine?4:2}" fill="${c.c}"`
+         +  (mine ? ` stroke="${c.d}" stroke-width="2"` : ` opacity="0.8"`) + `/>`;
+    if(w >= 20) segs += `<text x="${(x+w/2).toFixed(2)}" y="${(y+h/2+2.9).toFixed(2)}"`
+         + ` text-anchor="middle" font-size="7.5" font-weight="700" fill="#fff">`
+         + `${Math.round(RAND_PCT[k])}%</text>`;
+    if(mine) myCx = x + w/2;
+    x += w;
+  });
+  // 三角の目印。端でも枠から出ないように内側へ寄せる
+  const cx = Math.min(313, Math.max(7, myCx));
+  const bar = `<svg class="fig" viewBox="0 0 320 50" role="img"`
+    + ` aria-label="8タイプの出やすさの帯グラフ。あなたは${TYPES[best].name}">`
+    + `<path d="M${(cx-5).toFixed(2)} 0 L${(cx+5).toFixed(2)} 0 L${cx.toFixed(2)} 5.8 Z"`
+    + ` fill="${col.d}"/>${segs}</svg>`;
+
+  // ② 点数の内訳。同点は名前順で固定（描画のたびに順が変わらないように）
+  const keys = Object.keys(TYPES);
+  const ranked = keys.slice().sort((a,b)=> (score[b]-score[a]) || (a < b ? -1 : 1));
+  const maxV = Math.max(1, ...keys.map(k=>score[k]||0));
+  const RH = 19, TOP = 13;
+  let rows = `<text x="19" y="7.5" font-size="7" font-weight="700" fill="#8b8880">タイプ</text>`
+    + `<text x="172" y="7.5" font-size="7" font-weight="700" fill="#8b8880">あなたの点数</text>`
+    + `<text x="314" y="7.5" text-anchor="end" font-size="7" font-weight="700" fill="#8b8880">ランダム時の出方</text>`;
+  ranked.forEach((k,i)=>{
+    const c = TYPE_COLOR[k] || TYPE_COLOR.wakatta;
+    const v = score[k] || 0;
+    const top = TOP + i * RH, mid = top + 9.5;
+    const mine = (k === best), lead = mine || i < 3;
+    if(mine) rows += `<rect x="2" y="${top+0.5}" width="316" height="18" rx="5" fill="${c.s}"/>`;
+    rows += `<circle cx="11" cy="${mid}" r="3.6" fill="${c.c}" opacity="${lead?1:.45}"/>`
+      + `<text x="19" y="${mid+3.4}" font-size="9.5" font-weight="${lead?800:600}"`
+      + ` fill="${mine?c.d:'#1d2430'}" opacity="${lead?1:.5}">${TYPES[k].name}</text>`
+      + `<rect x="172" y="${mid-4}" width="94" height="8" rx="4" fill="#eae7dd"/>`
+      + `<rect x="172" y="${mid-4}" width="${(94*v/maxV).toFixed(2)}" height="8" rx="4"`
+      + ` fill="${c.c}" opacity="${lead?1:.45}"/>`
+      + `<text x="290" y="${mid+3.2}" text-anchor="end" font-size="9.5" font-weight="800"`
+      + ` fill="${mine?c.d:'#1d2430'}" opacity="${lead?1:.5}">${v}点</text>`
+      + `<text x="314" y="${mid+3}" text-anchor="end" font-size="7.5" font-weight="700"`
+      + ` fill="#9a978f">${RAND_PCT[k].toFixed(1)}%</text>`;
+  });
+  const H = TOP + keys.length * RH + 2;
+  const list = `<svg class="fig" viewBox="0 0 320 ${H}" role="img"`
+    + ` aria-label="8タイプそれぞれに入ったあなたの点数">${rows}</svg>`;
+
+  return `<div class="sec figwrap" style="margin-top:0">
+      <h3>8つの型の中で、あなたはここ</h3>
+      <div class="figbox">
+        <p class="figyou">あなた＝<b>${TYPES[best].name}</b></p>
+        ${bar}
+        <p class="fignote">帯の幅は<b>ランダムに答えた場合の出方</b>（3000回試行の実測）。
+          世の中の人の割合ではありません。「どんな型があるか」を見るための目盛りです。</p>
+      </div>
+      <div class="figbox">
+        ${list}
+        <p class="fignote">2位・3位にも点が入っていれば、その型が<b>混ざっています</b>。
+          点差が小さいときは、両方の助言を試してみてください。</p>
+      </div>
+    </div>`;
+}
+
+function result(){
+  // 同点のときは「あとの設問で選ばれたほう」を優先する。
+  // 後半の設問のほうが具体的な行動を聞いているので、そちらを信じる。
+  const last = {};
+  history.forEach((gain, i) => Object.keys(gain).forEach(k => { last[k] = i; }));
+  let best = null, bestV = -1;
+  Object.keys(score).forEach(k=>{
+    const v = score[k]*100 + (last[k] ?? -1);
+    if(v > bestV){ bestV = v; best = k; }
+  });
+  // 「どれも当てはまらない」ばかりで1点も入らなかった場合の逃げ。
+  // 何かを断定するより、いちばん多い相談内容を出したほうがまだ役に立つ。
+  if(!best || score[best] <= 0) best = "yusen";
+  const t = TYPES[best];
+  const col = TYPE_COLOR[best] || TYPE_COLOR.wakatta;
+  RESULT = t; RESULT_COL = col;      // 共有・画像化がここと同じ結果を使うため
+  const second = Object.keys(score).filter(k=>k!==best)
+    .sort((a,b)=>score[b]-score[a])[0];
+
+  app().innerHTML = `
+    <div class="res" style="--t:${col.c};--ts:${col.s};--td:${col.d}">
+      <div class="rhead">
+        <div class="rband"></div>
+        <div class="in">
+          <div class="rtype">あなたのつまずき方</div>
+          <div class="rname">${t.name}</div>
+          <p class="rsub">${t.sub}</p>
+          <div class="okbox"><b>できています</b>${t.kick}</div>
+        </div>
+      </div>
+
+      <div class="card">
+        ${figure(best, col)}
+
+        <div class="sec">
+          <h3>いま何が起きているか</h3>
+          ${t.what.map(x=>`<p>${x}</p>`).join('')}
+        </div>
+
+        <div class="sec">
+          <h3>先生ならこう言う</h3>
+          ${t.advice.map(a=>`<div class="advice"><b>${a[0]}</b><span>${a[1]}</span></div>`).join('')}
+        </div>
+
+        <div class="today">
+          <div class="t">今日やる1つだけ</div>
+          <div class="b">${t.today}</div>
+        </div>
+
+        <div class="sec">
+          <h3>効かないのでやらなくていいこと</h3>
+          <div class="warnbox"><div class="t">やりがちだけど、あなたには効きません</div>${t.bad}</div>
+        </div>
+
+        <div class="chips">
+          ${t.tags.map(x=>`<span class="chip">${x}</span>`).join('')}
+          <span class="chip plain">次に近いのは「${TYPES[second].name}」</span>
+        </div>
+
+        <button class="btn accent" onclick="saveImage()">結果を画像で保存する</button>
+        <button class="btn sub" onclick="share()">文字でコピーする</button>
+        <button class="btn sub" onclick="title()">もう一度やる</button>
+      </div>
+
+      <p class="note">この診断は、あなたを分類するためのものではありません。
+        <b>次の一手を1つだけ決めるため</b>のものです。<br>
+        合わないと思ったら、いちばん下の「効かないこと」だけ持ち帰ってください。</p>
+    </div>`;
+  window.scrollTo(0,0);
+}
+
+/* ⚠ 2026-08-10 修正：ここは以前、点数だけで並べ直してタイプを決めていた。
+   result() は「同点なら後の設問を優先」「1点も入らなければ yusen」という別の決め方を
+   しているので、**画面に出ている型と、コピーされる型が食い違うことがあった。**
+   result() が決めた結果（RESULT）をそのまま使う。 */
+let RESULT = null, RESULT_COL = null;
+
+/* 結果を1枚の画像にして保存する。
+   なぜ要るか：診断が広がるのは「結果を人に見せたくなる」からで、
+   その主役は文字ではなく画像。ここまで文字のコピーしか無かった。
+   外部ライブラリは使わない（canvasだけ）。送信もしない。 */
+function saveImage(){
+  const t = RESULT, col = RESULT_COL;
+  if(!t || !col) return;
+  const W = 1080, H = 1080, S = 2;          // 正方形。SNSで切れにくい
+  const cv = document.createElement('canvas');
+  cv.width = W * S; cv.height = H * S;
+  const c = cv.getContext('2d');
+  c.scale(S, S);
+  const F = (w, px) => `${w} ${px}px "Hiragino Kaku Gothic ProN","Yu Gothic UI","Yu Gothic","Meiryo",sans-serif`;
+
+  // 先に文字の高さを測ってから枠を描く。
+  // 固定の高さにすると、文が短いタイプで下が間延びする（最初そうなっていた）。
+  c.font = F(900, 68);
+  const nameH = wrap(c, t.name, 0, 0, W - 216, 84, true);
+  c.font = F(700, 30);
+  const subH = wrap(c, t.sub, 0, 0, W - 216, 48, true);
+  c.font = F(900, 38);
+  const todayH = wrap(c, t.today, 0, 0, W - 296, 50, true);
+
+  const nameY = 320;
+  const subY = nameY + nameH + 42;
+  const boxY = subY + subH + 26;
+  const boxH = 74 + todayH + 40;
+  const cardBottom = boxY + boxH + 54;
+  const top = Math.max(90, (H - 96 - (cardBottom - 116)) / 2);   // 縦に中央寄せ
+  const dy = top - 116;
+
+  c.fillStyle = col.s; c.fillRect(0, 0, W, H);
+  c.fillStyle = col.c; c.fillRect(0, 0, W, 26);
+  c.fillStyle = '#ffffff';
+  roundRect(c, 60, top, W - 120, cardBottom - 116, 34); c.fill();
+
+  c.fillStyle = col.d; c.font = F(900, 27);
+  c.fillText('勉強のつまずき方診断', 108, 196 + dy);
+  c.fillStyle = col.c; c.fillRect(108, 222 + dy, 74, 7);
+
+  c.fillStyle = col.d; c.font = F(900, 68);
+  wrap(c, t.name, 108, nameY + dy, W - 216, 84);
+
+  c.fillStyle = '#1d2430'; c.font = F(700, 30);
+  wrap(c, t.sub, 108, subY + dy, W - 216, 48);
+
+  c.fillStyle = col.c;
+  roundRect(c, 108, boxY + dy, W - 216, boxH, 24); c.fill();
+  c.fillStyle = 'rgba(255,255,255,.82)'; c.font = F(900, 23);
+  c.fillText('今日やる1つだけ', 148, boxY + dy + 54);
+  c.fillStyle = '#ffffff'; c.font = F(900, 38);
+  wrap(c, t.today, 148, boxY + dy + 114, W - 296, 50);
+
+  c.fillStyle = '#6d6a63'; c.font = F(700, 26);
+  c.fillText('d-studylab.com — 15問・2分', 108, H - 62);
+
+  cv.toBlob(b => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(b);
+    a.download = `勉強のつまずき方診断_${t.name}.png`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    const el = $('toast'); el.textContent = '画像を保存しました';
+    el.classList.add('on'); setTimeout(() => el.classList.remove('on'), 1800);
+  }, 'image/png');
+}
+
+function roundRect(c, x, y, w, h, r){
+  c.beginPath();
+  c.moveTo(x + r, y);
+  c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r);
+  c.arcTo(x, y + h, x, y, r);         c.arcTo(x, y, x + w, y, r);
+  c.closePath();
+}
+
+/* 日本語は単語で切れないので、1文字ずつ幅を測って折る。
+   measure=true のときは描かずに、必要な高さだけを返す（先に枠の大きさを決めるため）。 */
+function wrap(c, text, x, y, maxW, lh, measure){
+  let line = '', n = 0;
+  const put = () => { if(!measure) c.fillText(line, x, y + n * lh); n++; };
+  for(const ch of String(text)){
+    if(c.measureText(line + ch).width > maxW && line){ put(); line = ch; }
+    else { line += ch; }
+  }
+  if(line) put();
+  return measure ? n * lh : y + n * lh;
+}
+
+function share(){
+  const t = RESULT || TYPES[Object.keys(score).sort((a,b)=>score[b]-score[a])[0]];
+  const txt = `勉強のつまずき方診断\n私は「${t.name}」でした。\n\n今日やる1つ：${t.today}\n\n`;
+  const done = ()=>{ const el=$('toast'); el.classList.add('on');
+    setTimeout(()=>el.classList.remove('on'),1600); };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(done, done);
+  } else {
+    const ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta);
+    ta.select(); try{document.execCommand('copy');}catch(e){} ta.remove(); done();
+  }
+}
+
+title();
+</script>
+</body>
+</html>
