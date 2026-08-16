@@ -201,7 +201,7 @@ svg.fig{display:block;width:100%;max-width:100%;height:auto}
      その結果、**検索エンジンから見ると本文41字・見出し0個の空ページ**だった
      （実測。16作品中いちばん薄い）。AdSenseの不承認理由「有用性の低いコンテンツ」に
      まともに当たる状態。
-     → JSが動く前の中身をここに置く。JSが起動したら title() が上書きするので、
+     → JSが動く前の中身をここに置く。JSが起動したら showTitle() が上書きするので、
        遊ぶ人の体験は変わらない。JSが無い人と、クローラーには、これが見える。 -->
 <div class="wrap" id="app">
   <div class="kick">STUDY STUCK CHECK</div>
@@ -570,7 +570,7 @@ const history = [];
 const $ = id => document.getElementById(id);
 const app = () => $('app');
 
-function title(){
+function showTitle(){
   app().innerHTML = `
     <div class="kick">STUDY STUCK CHECK</div>
     <h1>勉強のつまずき方診断</h1>
@@ -764,7 +764,7 @@ function result(){
 
         <button class="btn accent" onclick="saveImage()">結果を画像で保存する</button>
         <button class="btn sub" onclick="share()">文字でコピーする</button>
-        <button class="btn sub" onclick="title()">もう一度やる</button>
+        <button class="btn sub" onclick="showTitle()">もう一度やる</button>
       </div>
 
       <p class="note">この診断は、あなたを分類するためのものではありません。
@@ -881,7 +881,7 @@ function share(){
   }
 }
 
-title();
+showTitle();
 </script>
 <script id="dsl-sound">
 window.DSL_BGM_DEFAULT = true;
